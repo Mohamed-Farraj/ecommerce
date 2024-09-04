@@ -1,0 +1,14 @@
+.nav-link{
+@apply duration-300 block py-2 px-5 text-gray-900 rounded hover:text-[var(--main-color)];
+}
+.active-nav-link{
+@apply duration-300 text-white block py-2 px-5 bg-[var(--main-color)] hover:text-white rounded hover:bg-[var(--hover-color)];
+}
+.wait
+{
+    transition: all 0.5;
+}
+li{
+    display: flex;
+    align-items: center;
+}

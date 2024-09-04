@@ -1,0 +1,156 @@
+<section class="pt-5">
+  <form [formGroup]="reg" (ngSubmit)="handleRegister()" class="max-w-2xl mx-auto">
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          formControlName="name"
+          type="text"
+          name="floating_first_name"
+          id="floating_first_name"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="floating_first_name"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >First name</label
+        >
+      </div>
+    </div>
+    @if(reg.get('name')?.errors && reg.get('name')?.touched){
+      @if(reg.get('name')?.getError('required')){
+
+        <app-alert msg="this field is required"></app-alert>
+      }
+      @else if(reg.get('name')?.getError('minlength')){
+        <app-alert msg="The name length must be more than 3 characters "></app-alert>
+      }
+      @else if(reg.get('name')?.getError('maxlength')){
+        <app-alert msg="The name length don't exceed 20 characters "></app-alert>
+      }
+    }
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        type="email"
+        name="floating_email"
+        id="floating_email"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
+        placeholder=" "
+        required
+        formControlName="email"
+
+      />
+      <label
+        for="floating_email"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Email address</label
+      >
+    </div>
+    @if(reg.get('email')?.errors && reg.get('email')?.touched){
+      @if(reg.get('email')?.getError('required')){
+
+        <app-alert msg="this field is required"></app-alert>
+      }
+      @else if(reg.get('email')?.getError('email')){
+        <app-alert msg="email must be valid"></app-alert>
+      }
+    }
+    <div class="">
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          type="tel"
+          name="floating_phone"
+          id="floating_phone"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
+          placeholder=" "
+          required
+          formControlName="phone"
+
+        />
+        <label
+          for="floating_phone"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Phone number (only Egyptian numbers)</label
+        >
+      </div>
+    </div>
+    @if(reg.get('phone')?.errors && reg.get('phone')?.touched){
+      @if(reg.get('phone')?.getError('required')){
+
+        <app-alert msg="this field is required"></app-alert>
+      }
+      @else if(reg.get('phone')?.getError('pattern')){
+        <app-alert msg="only Egyption number acceptable"></app-alert>
+      }
+    }
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        type="password"
+        name="floating_password"
+        id="floating_password"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
+        placeholder=" "
+        required
+        formControlName="password"
+
+      />
+      <label
+        for="floating_password"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Password</label
+      >
+    </div>
+    @if(reg.get('password')?.errors && reg.get('password')?.touched){
+      @if(reg.get('password')?.getError('required')){
+        <app-alert msg="this field is required"></app-alert>
+      }
+      @else if(reg.get("password")?.getError('pattern')){
+         <app-alert msg="minimum length is 6 characters or numbers"></app-alert>
+      }
+     
+    }
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        type="password"
+        name="repeat_password"
+        id="floating_repeat_password"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
+        placeholder=" "
+        required
+        formControlName="rePassword"
+
+      />
+      <label
+        for="floating_repeat_password"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Confirm password</label
+      >
+    </div>
+    @if(reg.get('rePassword')?.touched){
+      @if(reg.get('rePassword')?.getError('required')){
+        <app-alert msg="this field is required"></app-alert>
+      }
+      @else if (reg.getError('mismatch') === true) {
+        <app-alert msg="that don't match the password"></app-alert>
+      }
+    }
+    <button
+      [disabled]="isLoading || reg.invalid"
+      type="submit"
+      class="btn-main mb-12 duration-300 text-white bg-[var(--main-color)] hover:bg-[var(--hover-color)] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+    >
+    @if(isLoading){
+      <i class="fa-solid fa-spin fa-spinner"></i>
+    }
+      Submit
+    </button>
+    @if (errMsg) {
+      <app-alert msg=" {{errMsg}}"></app-alert>
+    }
+
+  </form>
+</section>
+
+
