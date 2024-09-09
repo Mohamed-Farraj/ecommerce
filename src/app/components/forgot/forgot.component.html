@@ -1,0 +1,109 @@
+<section class="mx-auto">
+    @if (step == 1) {
+  <form
+    [formGroup]="fem"
+    (ngSubmit)="forgotEmail()"
+    class="flex w-full justify-center items-center gap-3 text-nowrap py-5"
+  >
+    <input
+      type="text"
+      class="w-1/2 py-5 shadow-lg duration-300 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[var(--main-color)]"
+      placeholder="Email"
+      formControlName="email"
+      required
+    />
+    <button [disabled]="fem.invalid||isLoading" type="submit" class="btn-main py-5">
+        @if (isLoading) {
+        <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+    }
+        Reset</button>
+        {{ errMsg }}
+  </form>
+}
+
+  @else if (step == 2) {
+  <form [formGroup]="pin" (ngSubmit)="verifyCode()" class="max-w-sm mx-auto">
+    <label
+      for="number-input"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >write the digits sent via email:</label
+    >
+    <input
+      type="string"
+      maxlength="6"
+      id="number-input"
+      aria-describedby="helper-text-explanation"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="90210"
+      formControlName="resetCode"
+      required
+    />
+    <button [disabled]="pin.invalid||isLoading" type="submit" class="btn-main">
+        @if (isLoading) {
+            <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+        }
+        submit</button>
+        {{ errMsg }}
+  </form>
+}
+
+@else if (step == 3) {
+  <form
+    [formGroup]="log"
+    (ngSubmit)="finishReset()"
+    class="max-w-[50%] mx-auto"
+  >
+    <div class="mb-5">
+      <label
+        for="email"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Your email</label
+      >
+      <input
+        formControlName="email"
+        type="email"
+        id="email"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        placeholder="email@gmail.com"
+        required
+      />
+    </div>
+    @if (log.get('em')?.errors && log.get('em')?.touched) { @if
+    (log.get('em')?.getError('required')) {
+    <app-alert msg=" email is required"></app-alert>
+    } @else if (log.get('em')?.getError('em')) {
+    <app-alert msg=" email must be valid"></app-alert>
+    } }
+    <div class="mb-5">
+      <label
+        for="password"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Your password</label
+      >
+      <input
+        formControlName="newPassword"
+        placeholder="Enter your Password"
+        type="password"
+        id="password"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        required
+      />
+    </div>
+    @if (log.get('newpass')?.errors && log.get('newpass')?.touched) { @if
+    (log.get('newpass')?.getError('required')) {
+    <app-alert msg=" password is required"></app-alert>
+    } }
+
+    <button
+      [disabled]="log.invalid || isLoading"
+      type="submit"
+      class="btn-main"
+    >
+      @if (isLoading) {
+      <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+      } Submit
+    </button>
+    <h2 class="text-red-900">{{ errMsg }}</h2>
+  </form>
+}
+</section>

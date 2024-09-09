@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 
 @Component({
   selector: 'app-blank-nav',
@@ -10,6 +11,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './blank-nav.component.scss'
 })
 export class BlankNavComponent implements OnInit {
+  private readonly _AuthServiceService = inject(AuthServiceService)
 
   constructor(private _FlowbiteService:FlowbiteService) { }
 
@@ -21,8 +23,7 @@ export class BlankNavComponent implements OnInit {
 
   logout()
   {
-    sessionStorage.removeItem("token")
-    this._Router.navigate(['/login'])
+    this._AuthServiceService.logout()
   }
-
+ 
 }

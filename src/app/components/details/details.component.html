@@ -1,0 +1,41 @@
+@if (detail) {
+<section class="grid mt-5 py-5 grid-cols-2">
+    <div class="vslider flex flex-col justify-center items-center">
+        <div class="heroimage flex justify-center">
+            <img class="object-contain w-[40%]" [src]="hero" alt="">
+        </div>
+        <div class="slider  w-[80%] mx-auto">
+            <swiper-container class="mySwiper"
+            slides-per-view=3
+            navigation = true
+            style="--swiper-navigation-color : green"
+            space-between="10"
+            >
+            @for (det of detail.images ; track $index ) {
+                <swiper-slide (click)="hero = det;" ><img class="aspect-square object-contain " [src]="det" alt=""></swiper-slide>
+            }
+              </swiper-container>
+        </div>
+    </div>
+    <div class="productDetails px-4 flex flex-col justify-center items-center">
+        <p class="mb-4 self-start text-6xl tracking-tight text-gray-900 dark:text-white">{{detail.title}}</p>
+        <p class="mb-2 self-start text-2xl tracking-tight text-gray-700 dark:text-white">{{detail.description}}</p>
+        <span class="text-xl text-emerald-800 self-start">{{detail.category.name}}</span>
+<div class="w-full">
+        <div class="flex items-center mt-2.5 mb-5">
+            <span class="text-3xl me-auto font-bold text-gray-900 dark:text-white"><i class="fa-solid fa-sterling-sign"></i> {{detail.price}}</span>
+            <div [ngStyle]="{'background-image': getGradient(detail.ratingsAverage)}" class="flex items-center  bg-clip-text  rtl:space-x-reverse">
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+            </div>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 ms-3">{{detail.ratingsAverage}}</span>
+        </div>
+        
+    </div>
+    <button href="#"  class=" mt-2 mx-auto w-full text-2xl text-center btn-main hover:text-white">Add to cart</button>
+    </div>
+</section>
+}

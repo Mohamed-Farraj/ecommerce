@@ -1,1 +1,15 @@
-<p>categories works!</p>
+<section class="grid w-[90%] gap-5 mx-auto grid-cols-4">
+
+    @for (cat of categories; track cat._id) {
+
+<div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div>
+        <img class=" aspect-square w-full object-cover rounded-t-lg" [src]="cat.image" alt="" />
+    </div>
+    <div class="p-5">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{cat.name}}</h5>
+    </div>
+</div>
+}
+
+</section>

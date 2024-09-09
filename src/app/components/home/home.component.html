@@ -1,1 +1,82 @@
-<p>home works!</p>
+<!-- -------------- main slider -------------------- -->
+<section class="grid h-[40vh] grid-cols-12">
+  <div class="main-slider col-span-9">
+    <swiper-container
+      class="mySwiper"
+      pagination="true"
+      pagination-clickable="true"
+      navigation="true"
+      space-between="30"
+      centered-slides="true"
+      autoplay-delay="5000"
+      autoplay-disable-on-interaction="false"
+    >
+      <swiper-slide
+        ><img src="./assets/images/banner-4.jpeg" alt=""
+      /></swiper-slide>
+      <swiper-slide
+        ><img
+          src="./assets/images/2fa64cae-0e97-4506-85a4-f6decc933c97.avif"
+          alt=""
+      /></swiper-slide>
+      <swiper-slide
+        ><img
+          src="./assets/images/978ec254-e397-43d6-9de1-c06966f3e86c.avif"
+          alt=""
+      /></swiper-slide>
+      <swiper-slide
+        ><img
+          src="./assets/images/3d69235e-1202-40ff-84ba-9704ff10b211.avif"
+          alt=""
+      /></swiper-slide>
+      <div
+        style="z-index: 500"
+        class="autoplay-progress"
+        slot="container-end"
+      ></div>
+    </swiper-container>
+  </div>
+  <div class="side-imgs h-full col-span-3 flex flex-wrap">
+    <img class="object-cover block" src="./assets/images/grocery-banner.png" alt="" />
+      <img class="object-cover block" src="./assets/images/grocery-banner-2.jpeg" alt="" />
+  </div>
+</section>
+<!-- -------------- Categories slider -------------------- -->
+<section class="">
+  <owl-carousel-o class="" [options]="customOptions">
+    @for (category of categories; track category._id) {
+
+    <ng-template carouselSlide>
+      <div class="item">
+        <img
+          class="h-[30vh] object-cover"
+          [src]="category.image"
+          [alt]="category.name"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h4 class="text-center text-emerald-500">{{ category.name }}</h4>
+        </div>
+      </div></ng-template
+    >
+    }
+  </owl-carousel-o>
+</section>
+<!-- -------------- Popular Products -------------------- -->
+<div class="container">
+  <h1 class=" my-5 font-normal text-center text-emerald-700 text-5xl">Our Popular Products</h1>
+  <div class="grid grid-cols-4 gap-8">
+    @for(product of products.slice(0,8); track product.id){
+    <app-card
+      [imgSrc]="product.imageCover"
+      [title]="product.title"
+      [price]="product.price"
+      [category]="product.category.name"
+      [rating]="product.ratingsAverage"
+      [productId]="product._id"
+    ></app-card>
+    }
+  </div>
+  <button class="btn-main mx-auto my-5 block" routerLink="/products">
+    Click Here to See More
+  </button>
+</div>

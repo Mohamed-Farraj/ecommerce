@@ -1,13 +1,27 @@
 <section class="mt-4">
+  <div class="mb-5 w-full">
+    <input
+      type="text"
+      id="products-search"
+      class="w-[80%] md:w-1/2 mx-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+      placeholder="search in our products"
+      [(ngModel)]="searchQuery" 
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </div>
 
-    <div class="mb-5 w-full">
-        <input type="text" id="products-search" class=" w-[80%] md:w-1/2  mx-auto  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="search in our products" />
-      </div>
-
-      <div class="products-shelf w-[90%] mx-auto grid grid-cols-1  md:grid-cols-4 gap-5">
-
-        <app-card></app-card>
-
-      </div>
-
+  <div
+    class="products-shelf w-[90%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-5"
+  >
+    @for (product of filteredProducts; track product.id) {
+    <app-card
+      [imgSrc]="product.imageCover"
+      [title]="product.title"
+      [price]="product.price"
+      [category]="product.category.name"
+      [rating]="product.ratingsAverage"
+      [productId]="product._id"
+    ></app-card>
+    }
+  </div>
 </section>

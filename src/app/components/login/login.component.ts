@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from "../register/alert/alert.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +12,14 @@ import { AlertComponent } from "../register/alert/alert.component";
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
 
   private readonly _Router = inject(Router)
   private readonly _AuthServiceService = inject(AuthServiceService)
   private readonly _FormBuilder = inject(FormBuilder)
   isLoading:boolean=false
   errMsg:string="";
+  unsub!:Subscription
 
   log:FormGroup = this._FormBuilder.group({
     email:[null,[Validators.email,Validators.required]],
@@ -33,6 +35,7 @@ export class LoginComponent {
         if(res.message == "success")
         {
           sessionStorage.setItem("token",res.token)
+          this._AuthServiceService.deJWT();
           this._Router.navigate(['/home'])
         }
       },
@@ -42,5 +45,9 @@ export class LoginComponent {
         this.isLoading=false
       }
     })
+    
+  }
+  ngOnDestroy(): void {
+    this.unsub?.unsubscribe()
   }
 }

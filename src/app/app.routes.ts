@@ -9,17 +9,21 @@ import { BrandsComponent } from './components/brands/brands.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AboutComponent } from './components/about/about.component';
 import { CartComponent } from './components/cart/cart.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { ProductComponent } from './components/product/product.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { logedGuard } from './core/guards/loged.guard';
+import { authGuard } from './core/guards/auth.guard';
+import { DetailsComponent } from './components/details/details.component';
+import { ForgotComponent } from './components/forgot/forgot.component';
 
 export const routes: Routes = [
-    {path:"",component:AuthLayoutComponent,children:[
+    {path:"",component:AuthLayoutComponent,canActivate:[logedGuard],children:[
         {path:"",redirectTo:"login",pathMatch:"full"},
         {path:"login",component:LoginComponent},
         {path:"register",component:RegisterComponent},
+        {path:'forgot',component:ForgotComponent},
     ]},
-    {path:"",component:BlankLayoutComponent,children:[
+    {path:"",component:BlankLayoutComponent,canActivate:[authGuard],children:[
         {path:"",redirectTo:"home",pathMatch:"full"},
         {path:"home",component:HomeComponent},
         {path:"brands",component:BrandsComponent},
@@ -28,6 +32,8 @@ export const routes: Routes = [
         {path:"cart",component:CartComponent},
         {path:"products",component:ProductComponent},
         {path:"wishlist",component:WishlistComponent},
+        {path:'details/:id',component:DetailsComponent},
+        
     ]},
     {path:"**",component:NotfoundComponent}
 ];

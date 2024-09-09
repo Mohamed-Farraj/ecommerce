@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 import { AbstractControl, FormControl, FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from "./alert/alert.component";
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -11,8 +12,9 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit , OnDestroy{
   errMsg: any;
+  unsub!:Subscription;
 
   constructor(private _FlowbiteService:FlowbiteService){}
   private readonly _AuthServiceService = inject(AuthServiceService)
@@ -64,5 +66,9 @@ else{
   return {'mismatch':true}
 }
 }
+
+  ngOnDestroy(){
+    this.unsub?.unsubscribe()
+  }
 
 }
