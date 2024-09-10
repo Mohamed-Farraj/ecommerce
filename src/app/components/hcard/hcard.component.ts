@@ -3,6 +3,7 @@ import { RequiredValidator } from '@angular/forms';
 import { IProduct } from '../../core/interfaces/iproduct';
 import { IPData } from '../../core/interfaces/ipdata';
 import { CartService } from '../../core/services/cart.service';
+import { updatecartnumber } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-hcard',
@@ -43,6 +44,10 @@ export class HcardComponent {
       {
         console.log(this.productData.product.id);
         let newCount = this.productData.count - 1
+        if(newCount = 0)
+        {
+          updatecartnumber("-")
+        }
         this._CartService.updateCart(id,newCount.toString()).subscribe({
           next:(res)=>{
             console.log(res);
@@ -59,6 +64,7 @@ export class HcardComponent {
         this._CartService.removeFromCart(id).subscribe({
           next:(res)=>{
             console.log("removal result",res);
+            updatecartnumber("-")
             this.notifyParent.emit()
           },
           error:(err)=>{

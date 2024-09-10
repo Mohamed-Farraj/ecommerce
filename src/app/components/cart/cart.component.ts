@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CartService } from '../../core/services/cart.service';
 import { IProduct } from '../../core/interfaces/iproduct';
 import { NgStyle } from '@angular/common';
-import { enverionment } from '../../core/environments/environment';
+import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -37,8 +37,8 @@ export class CartComponent {
           this.cartPrice = res.data.totalCartPrice;
           this.products = res.data.products;
           this.cartId = res.cartId
-          enverionment.cartItems = this.numberOfItems
-          console.log(enverionment.cartItems);
+          updatecartnumber(this.numberOfItems)
+          console.log(cartItems);
           console.log(res);
         }
       },
@@ -52,6 +52,7 @@ export class CartComponent {
     this._CartService.clearCart().subscribe({
       next:(res)=>{
         console.log(res);
+        updatecartnumber("*")
         this.display()
       },
       error:(err)=>{

@@ -2,7 +2,7 @@ import { NgStyle } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
-import { enverionment } from '../../core/environments/environment';
+import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-card',
@@ -31,8 +31,8 @@ export class CardComponent {
   this._CartService.addToCart(id).subscribe({
     next:(res)=>{
       console.log(res);
-      enverionment.cartItems = enverionment.cartItems + 1 ;
-      console.log(enverionment.cartItems);
+      updatecartnumber("+")
+      console.log(cartItems);
       
     },
     error:(err)=>{
