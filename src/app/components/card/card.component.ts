@@ -1,6 +1,8 @@
 import { NgStyle } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../core/services/cart.service';
+import { enverionment } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-card',
@@ -18,10 +20,25 @@ export class CardComponent {
  @Input() productId:string = "";
 
  ratingCiel:number = Math.ceil(this.rating);
-
+ private readonly _CartService = inject(CartService)
+ 
  getGradient(value: number){
   const percentage = (value / 5) * 100; // Convert to percentage based on max 5 stars
     return `linear-gradient(90deg, #FFC107 ${percentage}%, #E0E0E0 ${percentage}%)`;
+ }
+
+ addToCart(id:string){
+  this._CartService.addToCart(id).subscribe({
+    next:(res)=>{
+      console.log(res);
+      enverionment.cartItems = enverionment.cartItems + 1 ;
+      console.log(enverionment.cartItems);
+      
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
  }
 
 

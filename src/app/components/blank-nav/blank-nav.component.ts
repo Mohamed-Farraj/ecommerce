@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
+import { enverionment } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-blank-nav',
@@ -14,7 +15,7 @@ export class BlankNavComponent implements OnInit {
   private readonly _AuthServiceService = inject(AuthServiceService)
 
   constructor(private _FlowbiteService:FlowbiteService) { }
-
+  cartItems = enverionment.cartItems;
   ngOnInit(): void {
       this._FlowbiteService.loadFlowbite(()=>{})
   }

@@ -1,11 +1,21 @@
 <section class="my-16 p-10 container w-[80%] bg-gray-100">
 
-    <h2 class="text-2xl py-5">
-        Cart
+    <h2 class="text-2xl py-5 w-full flex justify-between">
+        <span>Cart</span>
+        <button [ngStyle]="{'display': numberOfItems ? 'block' : 'none'}" class="btn-main">Check Out</button>
+    </h2>
+    <h2 class="text-2xl w-full flex justify-between">
+       <span>Total: <span class="text-emerald-600 ">{{cartPrice}}</span></span> 
+       <span class="ms-auto">Number of Items: <span class="text-emerald-600">{{numberOfItems}}</span></span>
     </h2>
 
-    <div class="flex space-y-5 justify-center">
-        <app-hcard cardtype="cart"></app-hcard>
+
+    <div class="grid grid-cols-1 gap-5">
+        @for(product of products ; track product._id){
+        <app-hcard (notifyParent)="display()" [productData]="product"  cardtype="cart"></app-hcard>
+   }
     </div>
+
+    <button [ngStyle]="{'display': numberOfItems ? 'block' : 'none'}" (click)="clearCart()" class="btn-main !bg-red-700 block mx-auto !px-10 mt-5">Clear Cart</button>
 
 </section>
