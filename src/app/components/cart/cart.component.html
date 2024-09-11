@@ -2,7 +2,7 @@
 
     <h2 class="text-2xl py-5 w-full flex justify-between">
         <span>Cart</span>
-        <button [ngStyle]="{'display': numberOfItems ? 'block' : 'none'}" class="btn-main">Check Out</button>
+        <button (click)="checkout()" [ngStyle]="{'display': numberOfItems ? 'block' : 'none'}" class="btn-main">Check Out</button>
     </h2>
     <h2 class="text-2xl w-full flex justify-between">
        <span>Total: <span class="text-emerald-600 ">{{cartPrice}}</span></span> 

@@ -1,12 +1,12 @@
     
 <div class=" w-1/2 mx-auto flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" [src]="productData.product.imageCover" alt="">
+    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" [src]=" cardtype === 'cart' ?productData.product.imageCover:productData.imageCover" alt="">
     <div class="flex flex-grow h-full flex-col justify-between p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{productData.product.title}}</h5>
-        <h6 class=" font-semibold text-[var(--main-color)]">{{productData.price}} EGP</h6>
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{cardtype === 'cart' ? productData.product.title: productData.title}}</h5>
+        <h6 class=" font-semibold text-[var(--main-color)]">{{ productData.price}} EGP</h6>
         <div class="flex justify-between mt-5">
             @if (cardtype === 'wish') {
-                <button class="btn-main">Add to Cart</button>
+                <button (click)="addToCart(productData.id)" class="btn-main">Add to Cart</button>
             }
 
             @else if (cardtype === 'cart') {
@@ -18,7 +18,7 @@
                 
             }
             
-            <button (click)="removeItem(productData.product.id)" class="mx-5 text-red-600 duration-500 hover:text-red-800">
+            <button (click)="cardtype === 'cart'?removeItem(productData.product.id):removeItemw(productData.id)" class="mx-5 text-red-600 duration-500 hover:text-red-800">
                 <i class="fa-solid fa-trash"></i>
                 <span class="ms-2">Remove</span>
             </button>

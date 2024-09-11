@@ -1,0 +1,36 @@
+<section>
+    
+    @if(!userOrders.length){
+        <h1 class="text-center text-red-800 text-6xl w-full">your buying history is empty</h1>
+        <h1 [routerLink]="['/products']" routerLinkActive="router-link-active"  class="text-center mt-10 btn-main text-emerald-800 text-3xl w-fit mx-auto" >try our products</h1>
+    }
+    <div class="container grid grid-cols-1 md:grid-cols-3 gap-4  ">
+
+
+        @for(order of userOrders ; track order.id)
+        {
+            
+            @for(pro of order.cartItems ; track pro.product._id){
+
+                <div class="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div class=" border-b-2 flex flex-col items-center py-10">
+                        <img class="w-28 h-28 object-cover mb-3 rounded-full shadow-lg" [src]="pro.product.imageCover" alt="Bonnie image"/>
+                        <h5 class="mb-1 px-3 text-center text-lg font-medium text-gray-900 dark:text-white line-clamp-1">{{pro.product.title}}</h5>
+                        <span class="text-sm text-emerald-500 dark:text-emerald-400">{{pro.product.category.name}}</span>
+                        <div class="flex mt-4 md:mt-6">
+                            <a [routerLink]="['/details',pro.product.id]" routerLinkActive="router-link-active"  class="btn-main">Go to Product Details</a>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="flex justify-between">
+                            <span>Order id: {{order.id}}</span>
+                            <span>Shipped to: {{order.shippingAddress.city}}</span>
+                         </p>
+                    </div>
+                </div>
+            }
+            
+        }
+
+</div>
+</section>

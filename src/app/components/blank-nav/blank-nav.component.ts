@@ -15,19 +15,19 @@ export class BlankNavComponent implements OnInit {
   private readonly _AuthServiceService = inject(AuthServiceService)
 
   constructor(private _FlowbiteService:FlowbiteService) { }
-  cartItemscounter:number = 0;
+  cartItemscounter!:number ;
   ngOnInit(): void {
       this._FlowbiteService.loadFlowbite(()=>{})
       this.cartItemscounter = cartItems;
       console.log("hello from blank nav",cartItems,this.cartItemscounter);
   }
 
-  ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    this.cartItemscounter = cartItems;
-    console.log("hello from blank nav",cartItems,this.cartItemscounter);
-  }
+  // ngAfterViewChecked(): void {
+  //   //Called after every check of the component's view. Applies to components only.
+  //   //Add 'implements AfterViewChecked' to the class.
+  //   this.cartItemscounter = cartItems;
+  //   console.log("hello from blank nav",cartItems,this.cartItemscounter);
+  // }
 
   private readonly _Router= inject(Router)
 

@@ -4,8 +4,10 @@
             Wish List
         </h2>
 
-        <div class="flex space-y-5 justify-center">
-            <app-hcard cardtype="wish"></app-hcard>
+        <div class="grid grid-cols-1 gap-5">
+            @for(pro of ProductData ; track pro.id){
+                <app-hcard (notifyParent)="display()" [productData]="pro" cardtype="wish"></app-hcard>
+            }
         </div>
 
 </section>

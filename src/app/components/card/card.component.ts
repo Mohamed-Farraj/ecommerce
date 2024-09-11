@@ -3,6 +3,7 @@ import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-card',
@@ -21,6 +22,7 @@ export class CardComponent {
 
  ratingCiel:number = Math.ceil(this.rating);
  private readonly _CartService = inject(CartService)
+ private readonly _WishlistService = inject(WishlistService)
  
  getGradient(value: number){
   const percentage = (value / 5) * 100; // Convert to percentage based on max 5 stars
@@ -39,6 +41,19 @@ export class CardComponent {
       console.log(err);
     }
   })
+ }
+
+ addToWishlist(id:string){
+
+  this._WishlistService.addWishlist(id).subscribe({
+    next:(res)=>{
+      console.log(res);
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
+
  }
 
 

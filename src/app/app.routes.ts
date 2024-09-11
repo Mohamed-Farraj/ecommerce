@@ -15,6 +15,8 @@ import { logedGuard } from './core/guards/loged.guard';
 import { authGuard } from './core/guards/auth.guard';
 import { DetailsComponent } from './components/details/details.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { AllordersComponent } from './components/allorders/allorders.component';
 
 export const routes: Routes = [
     {path:"",component:AuthLayoutComponent,canActivate:[logedGuard],children:[
@@ -33,6 +35,8 @@ export const routes: Routes = [
         {path:"products",component:ProductComponent},
         {path:"wishlist",component:WishlistComponent},
         {path:'details/:id',component:DetailsComponent},
+        {path:'orders/:id',component:OrdersComponent},
+        {path:'allorders',component:AllordersComponent},
         
     ]},
     {path:"**",component:NotfoundComponent}

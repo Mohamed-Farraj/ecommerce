@@ -1,6 +1,6 @@
 export const enverionment = {
     baseUrl: "https://ecommerce.routemisr.com",
-    
+    serverUrl: "http://localhost:4200"
 }
 
 export let cartItems:number = 0;

@@ -5,6 +5,7 @@ import { CartService } from '../../core/services/cart.service';
 import { IProduct } from '../../core/interfaces/iproduct';
 import { NgStyle } from '@angular/common';
 import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -17,6 +18,7 @@ export class CartComponent {
 
   private readonly _HttpClient = inject(HttpClient)
   private readonly _CartService = inject(CartService)
+  private readonly _Router = inject(Router)
   numberOfItems:number=0;
   cartPrice:number=0;
   cartId:string=""
@@ -60,5 +62,9 @@ export class CartComponent {
       }
     })
 
+  }
+
+  checkout(){
+    this._Router.navigate(["/orders",this.cartId])
   }
 }
