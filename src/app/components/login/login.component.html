@@ -1,5 +1,5 @@
-<section>
-  <form [formGroup]="log" (ngSubmit)="handleLogin()" class="max-w-[50%] mx-auto">
+<section class="p-5">
+  <form [formGroup]="log" (ngSubmit)="handleLogin()" class=" mx-auto">
     <div class="mb-5">
       <label
         for="email"
@@ -44,12 +44,12 @@
       }
     }
 
-    <button [disabled]="log.invalid || isLoading" type="submit" class="btn-main">
+    <button [disabled]="log.invalid || isLoading" type="submit" class="btn-main mb-2 me-3 ">
       @if (isLoading) {
         <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
       }
-      Submit</button> 
-      <span class="ms-3 cursor-pointer text-emerald-600" routerLink="/forgot">forgot your password?</span>
+      Submit</button>
+      <span class="cursor-pointer text-emerald-600" routerLink="/forgot">forgot your password?</span>
       <h2 class="text-red-900">{{errMsg}}</h2>
   </form>
 </section>

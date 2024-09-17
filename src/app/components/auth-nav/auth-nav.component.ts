@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 
@@ -11,10 +11,17 @@ import { FlowbiteService } from '../../core/services/flowbite.service';
 })
 export class AuthNavComponent implements OnInit {
 
-  constructor(private _FlowbiteService:FlowbiteService) { }
+  private readonly _FlowbiteService = inject(FlowbiteService);
+
 
 ngOnInit(): void {
-    this._FlowbiteService.loadFlowbite(()=>{})
+    
+}
+
+ngAfterViewInit(): void {
+  //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  //Add 'implements AfterViewInit' to the class.
+  this._FlowbiteService.loadFlowbite(()=>{})
 }
 
 

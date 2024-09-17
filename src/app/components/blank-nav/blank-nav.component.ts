@@ -13,13 +13,19 @@ import { cartItems, enverionment } from '../../core/environments/environment';
 })
 export class BlankNavComponent implements OnInit {
   private readonly _AuthServiceService = inject(AuthServiceService)
-
-  constructor(private _FlowbiteService:FlowbiteService) { }
+  private readonly _FlowbiteService = inject(FlowbiteService);
+  private readonly _Router= inject(Router)
   cartItemscounter!:number ;
   ngOnInit(): void {
-      this._FlowbiteService.loadFlowbite(()=>{})
+      
       this.cartItemscounter = cartItems;
       console.log("hello from blank nav",cartItems,this.cartItemscounter);
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this._FlowbiteService.loadFlowbite(()=>{})
   }
 
   // ngAfterViewChecked(): void {
@@ -29,7 +35,6 @@ export class BlankNavComponent implements OnInit {
   //   console.log("hello from blank nav",cartItems,this.cartItemscounter);
   // }
 
-  private readonly _Router= inject(Router)
 
   logout()
   {
