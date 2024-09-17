@@ -3,11 +3,12 @@ import { FlowbiteService } from '../../core/services/flowbite.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 import { cartItems, enverionment } from '../../core/environments/environment';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-blank-nav',
   standalone: true,
-  imports: [RouterLink,RouterLinkActive],
+  imports: [RouterLink,RouterLinkActive,NgIf],
   templateUrl: './blank-nav.component.html',
   styleUrl: './blank-nav.component.scss'
 })
@@ -16,6 +17,7 @@ export class BlankNavComponent implements OnInit {
   private readonly _FlowbiteService = inject(FlowbiteService);
   private readonly _Router= inject(Router)
   cartItemscounter!:number ;
+  isMenuOpen: boolean = false;
   ngOnInit(): void {
       
       this.cartItemscounter = cartItems;
@@ -40,5 +42,10 @@ export class BlankNavComponent implements OnInit {
   {
     this._AuthServiceService.logout()
   }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
  
 }
