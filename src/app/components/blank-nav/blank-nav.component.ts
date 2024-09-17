@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
@@ -17,7 +17,19 @@ export class BlankNavComponent implements OnInit {
   private readonly _FlowbiteService = inject(FlowbiteService);
   private readonly _Router= inject(Router)
   cartItemscounter!:number ;
-  isMenuOpen: boolean = false;
+  isMenuOpen: boolean = true;
+  isMobile: boolean = window.innerWidth < 768;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = event.target.innerWidth < 768;
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
+  }
   ngOnInit(): void {
       
       this.cartItemscounter = cartItems;

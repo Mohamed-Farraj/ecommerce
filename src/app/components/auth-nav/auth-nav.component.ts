@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { NgIf } from '@angular/common';
@@ -13,7 +13,19 @@ import { NgIf } from '@angular/common';
 export class AuthNavComponent implements OnInit {
 
   private readonly _FlowbiteService = inject(FlowbiteService);
-  isMenuOpen: boolean = false;
+  isMenuOpen: boolean = true;
+  isMobile: boolean = window.innerWidth < 768;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = event.target.innerWidth < 768;
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
+  }
 
 
   ngOnInit(): void {
