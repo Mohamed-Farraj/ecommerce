@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-card',
@@ -23,6 +24,7 @@ export class CardComponent {
  ratingCiel:number = Math.ceil(this.rating);
  private readonly _CartService = inject(CartService)
  private readonly _WishlistService = inject(WishlistService)
+ private readonly _ToastrService = inject(ToastrService)
  
  getGradient(value: number){
   const percentage = (value / 5) * 100; // Convert to percentage based on max 5 stars
@@ -31,14 +33,15 @@ export class CardComponent {
 
  addToCart(id:string){
   this._CartService.addToCart(id).subscribe({
-    next:(res)=>{
+    next:(res:any)=>{
       console.log(res);
       updatecartnumber("+")
       console.log(cartItems);
-      
+      this._ToastrService.success(res.message)
     },
     error:(err)=>{
       console.log(err);
+      this._ToastrService.error(err.message)
     }
   })
  }
@@ -46,11 +49,13 @@ export class CardComponent {
  addToWishlist(id:string){
 
   this._WishlistService.addWishlist(id).subscribe({
-    next:(res)=>{
+    next:(res:any)=>{
       console.log(res);
+      this._ToastrService.success(res.message)
     },
     error:(err)=>{
       console.log(err);
+      this._ToastrService.error(err.message)
     }
   })
 

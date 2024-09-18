@@ -31,6 +31,12 @@ export class BlankNavComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
       
       this.cartItemscounter = cartItems;
       console.log("hello from blank nav",cartItems,this.cartItemscounter);

@@ -32,6 +32,12 @@ export class AuthNavComponent implements OnInit {
     this._FlowbiteService.loadFlowbite(flowbite => {
       console.log('Flowbite loaded', flowbite);
     });
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
   }
 
 
