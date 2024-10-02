@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IDetails } from '../../core/interfaces/idetails';
 import { NgStyle } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../core/services/cart.service';
+import { cartItems, updatecartnumber } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-details',
@@ -17,6 +20,9 @@ export class DetailsComponent implements OnInit,OnDestroy{
 
   private readonly _ProductsService = inject(ProductsService)
   private readonly _ActivatedRoute = inject(ActivatedRoute)
+  private readonly _ToastrService = inject(ToastrService);
+  private readonly _CartService = inject(CartService)
+
   id: string | null = ""
   slds:number= 3;
   detail!:IDetails 
@@ -55,6 +61,20 @@ export class DetailsComponent implements OnInit,OnDestroy{
       return `linear-gradient(90deg, #FFC107 ${percentage}%, #E0E0E0 ${percentage}%)`;
    }
 
+   add(){
+    this._CartService.addToCart(this.id!).subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        updatecartnumber("+")
+        console.log(cartItems);
+        this._ToastrService.success(res.message)
+      },
+      error:(err)=>{
+        console.log(err);
+        this._ToastrService.error(err.message)
+      }
+    })
+   }
  
 
 }

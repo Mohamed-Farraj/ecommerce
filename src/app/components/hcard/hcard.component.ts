@@ -5,6 +5,7 @@ import { IPData } from '../../core/interfaces/ipdata';
 import { CartService } from '../../core/services/cart.service';
 import { updatecartnumber } from '../../core/environments/environment';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-hcard',
@@ -21,6 +22,7 @@ export class HcardComponent {
 
       private readonly _CartService = inject(CartService)
       private readonly _WishlistService = inject(WishlistService)
+      private readonly _ToastrService = inject(ToastrService)
 
       ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -64,36 +66,42 @@ export class HcardComponent {
 
       removeItem(id:string){
         this._CartService.removeFromCart(id).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
             console.log("removal result",res);
             updatecartnumber("-")
             this.notifyParent.emit()
+            this._ToastrService.success(res.status)
           },
           error:(err)=>{
             console.log(err);
+            this._ToastrService.error(err.status)
           }
         })
       }
       removeItemw(id:string){
         this._WishlistService.removeWishlist(id).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
             console.log("removal result",res);
             this.notifyParent.emit();
+            this._ToastrService.success(res.message)
           },
           error:(err)=>{
             console.log(err);
+            this._ToastrService.error(err.message)
           }
         })
       }
 
       addToCart(id:string){
         this._CartService.addToCart(id).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
             console.log(res);
-            updatecartnumber("+")            
+            updatecartnumber("+")
+            this._ToastrService.success(res.message)            
           },
           error:(err)=>{
             console.log(err);
+            this._ToastrService.error(err.message)
           }
         })
        }

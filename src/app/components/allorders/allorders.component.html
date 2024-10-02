@@ -10,7 +10,7 @@
         @for(order of userOrders ; track order.id)
         {
             
-            @for(pro of order.cartItems ; track pro.product._id){
+            @for(pro of order.cartItems ; track pro._id){
 
                 <div class="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class=" border-b-2 flex flex-col items-center py-10">

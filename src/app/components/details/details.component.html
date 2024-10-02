@@ -1,22 +1,37 @@
 @if (detail) {
-<section class="grid mt-5 py-5 grid-cols-2">
-    <div class="vslider flex flex-col justify-center items-center">
-        <div class="heroimage flex justify-center">
-            <img class="object-contain w-[40%]" [src]="hero" alt="">
+<section class="grid mt-5 py-5 px-4 grid-cols-1 md:grid-cols-2">
+    
+    <div class="vslider ">
+        <div class="w-[80%] md:w-1/2 mx-auto">
+             <swiper-container style="--swiper-navigation-color: var(--main-color); --swiper-pagination-color: #fff" class="mySwiper"
+    thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
+    <swiper-slide>
+        <img [src]="hero" />
+      </swiper-slide>
+    @for (image of detail.images; track $index) {
+    <swiper-slide>
+      <img [src]="image" />
+    </swiper-slide>
+    }
+  </swiper-container>
+
+  <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
+    watch-slides-progress="true">
+    <swiper-slide>
+        <img class="cursor-pointer" [src]="hero" />
+      </swiper-slide>
+    @for (image of detail.images; track $index) {
+    <swiper-slide>
+      <img class="cursor-pointer"  [src]="image" />
+    </swiper-slide>
+    }
+  </swiper-container>
         </div>
-        <div class="slider  w-[80%] mx-auto">
-            <swiper-container class="mySwiper"
-            slides-per-view=3
-            navigation = true
-            style="--swiper-navigation-color : green"
-            space-between="10"
-            >
-            @for (det of detail.images ; track $index ) {
-                <swiper-slide (click)="hero = det;" ><img class="aspect-square object-contain " [src]="det" alt=""></swiper-slide>
-            }
-              </swiper-container>
-        </div>
+
+ 
+
     </div>
+
     <div class="productDetails px-4 flex flex-col justify-center items-center">
         <p class="mb-4 self-start text-6xl tracking-tight text-gray-900 dark:text-white">{{detail.title}}</p>
         <p class="mb-2 self-start text-2xl tracking-tight text-gray-700 dark:text-white">{{detail.description}}</p>
@@ -35,7 +50,12 @@
         </div>
         
     </div>
-    <button href="#"  class=" mt-2 mx-auto w-full text-2xl text-center btn-main hover:text-white">Add to cart</button>
+    <button (click)="add()"  class=" mt-2 mx-auto w-full text-2xl text-center btn-main hover:text-white">Add to cart</button>
     </div>
 </section>
 }
+
+
+<section>
+    
+</section>
