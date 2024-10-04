@@ -7,6 +7,7 @@ import { NgStyle } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../core/services/cart.service';
 import { cartItems, updatecartnumber } from '../../core/environments/environment';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-details',
@@ -31,6 +32,7 @@ export class DetailsComponent implements OnInit,OnDestroy{
   hero:string = ""
   
   ngOnInit(): void {
+    Aos.init()
       this.unsubParams = this._ActivatedRoute.paramMap.subscribe({
         next:(params)=>{
           console.log(params.get('id'));
@@ -47,6 +49,11 @@ export class DetailsComponent implements OnInit,OnDestroy{
         }
       })
       
+  }
+
+  ngAfterViewInit(): void {
+
+    Aos.refresh()
   }
 
   

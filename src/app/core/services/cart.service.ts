@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { enverionment } from '../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class CartService {
   private readonly _HttpClient = inject(HttpClient)
   token:any = sessionStorage.getItem('token');
   tokenHeader:any={token : this.token}
+  numberCartItems:BehaviorSubject<number> = new BehaviorSubject(0);
 
   addToCart(id:string){
     return this._HttpClient.post(`${enverionment.baseUrl}/api/v1/cart`,{"productId":id},{headers:this.tokenHeader})

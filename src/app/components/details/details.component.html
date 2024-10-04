@@ -1,7 +1,7 @@
 @if (detail) {
-<section class="grid mt-5 py-5 px-4 grid-cols-1 md:grid-cols-2">
+<section class="overflow-x-hidden grid mt-5 py-5 px-4 grid-cols-1 md:grid-cols-2">
     
-    <div class="vslider ">
+    <div data-aos="fade-right" class="vslider ">
         <div class="w-[80%] md:w-1/2 mx-auto">
              <swiper-container style="--swiper-navigation-color: var(--main-color); --swiper-pagination-color: #fff" class="mySwiper"
     thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
@@ -32,7 +32,7 @@
 
     </div>
 
-    <div class="productDetails px-4 flex flex-col justify-center items-center">
+    <div data-aos="fade-left" class="productDetails px-4 flex flex-col justify-center items-center">
         <p class="mb-4 self-start text-6xl tracking-tight text-gray-900 dark:text-white">{{detail.title}}</p>
         <p class="mb-2 self-start text-2xl tracking-tight text-gray-700 dark:text-white">{{detail.description}}</p>
         <span class="text-xl text-emerald-800 self-start">{{detail.category.name}}</span>

@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 import { cartItems, enverionment } from '../../core/environments/environment';
 import { NgIf } from '@angular/common';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-blank-nav',
@@ -15,8 +16,9 @@ import { NgIf } from '@angular/common';
 export class BlankNavComponent implements OnInit {
   private readonly _AuthServiceService = inject(AuthServiceService)
   private readonly _FlowbiteService = inject(FlowbiteService);
+  private readonly _CartService = inject(CartService)
   private readonly _Router= inject(Router)
-  cartItemscounter!:number ;
+  cartItemscounter:number = 0 ;
   isMenuOpen: boolean = true;
   isMobile: boolean = window.innerWidth < 768;
 
@@ -31,6 +33,18 @@ export class BlankNavComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    
+     this._CartService.numberCartItems.subscribe({
+      next:(res)=>{
+        this.cartItemscounter = res
+        console.log(res);
+      }
+    }) ;
+    
+    this._CartService.getCart().subscribe((res:any)=>{
+      console.log(res);
+      this.cartItemscounter = res.numOfCartItems;
+    });
     if (!this.isMobile) {
       this.isMenuOpen = true;
     }

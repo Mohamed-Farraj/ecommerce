@@ -5,6 +5,7 @@ import { IProduct } from '../../core/interfaces/iproduct';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-product',
@@ -42,7 +43,7 @@ export class ProductComponent implements OnInit,OnDestroy {
   
 
   ngOnInit(): void {
-  
+  Aos.init()
     this._productsService.getAllProducts().subscribe({
       next:(res:any)=>{
         console.log(res.data);

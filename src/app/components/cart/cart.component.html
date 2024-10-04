@@ -1,3 +1,4 @@
+@if (products) {
 <section class="my-16 md:p-10 container md:w-[80%] bg-gray-100">
 
     <h2 class="text-2xl py-5 w-full flex justify-between">
@@ -19,3 +20,4 @@
     <button [ngStyle]="{'display': numberOfItems ? 'block' : 'none'}" (click)="clearCart()" class="btn-main !bg-red-700 block mx-auto !px-10 mt-5">Clear Cart</button>
 
 </section>
+}

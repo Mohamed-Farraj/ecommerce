@@ -56,6 +56,7 @@ export class CartComponent {
         console.log(res);
         updatecartnumber("*")
         this.display()
+        this._CartService.numberCartItems.next(0)
       },
       error:(err)=>{
         console.log(err);

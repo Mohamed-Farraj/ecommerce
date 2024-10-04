@@ -19,25 +19,26 @@ export class HcardComponent {
       @Input() cardtype:string="";
       @Input() productData!:any;
       @Output() notifyParent: EventEmitter<void> = new EventEmitter();
+      spin:boolean = true
 
       private readonly _CartService = inject(CartService)
       private readonly _WishlistService = inject(WishlistService)
       private readonly _ToastrService = inject(ToastrService)
 
       ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
         console.log(this.productData);
       }
 
       plus(id:string)
       {
+        this.spin = false
         console.log(this.productData.product.id);
         let newCount = this.productData.count +1
         this._CartService.updateCart(id,newCount.toString()).subscribe({
           next:(res)=>{
             console.log(res);
             this.notifyParent.emit()
+            this.spin = true
           },
           error:(err)=>{
             console.log(err);
@@ -46,15 +47,18 @@ export class HcardComponent {
       }
       minus(id:string)
       {
+        this.spin = false
         console.log(this.productData.product.id);
         let newCount = this.productData.count - 1
-        if(newCount = 0)
+        if(newCount == 0)
         {
           updatecartnumber("-")
         }
         this._CartService.updateCart(id,newCount.toString()).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
             console.log(res);
+            this.spin = true
+            this._CartService.numberCartItems.next(res.numOfCartItems)
             this.notifyParent.emit()
           },
           error:(err)=>{
@@ -71,6 +75,7 @@ export class HcardComponent {
             updatecartnumber("-")
             this.notifyParent.emit()
             this._ToastrService.success(res.status)
+            this._CartService.numberCartItems.next(res.numOfCartItems)
           },
           error:(err)=>{
             console.log(err);
@@ -96,6 +101,7 @@ export class HcardComponent {
         this._CartService.addToCart(id).subscribe({
           next:(res:any)=>{
             console.log(res);
+            this._CartService.numberCartItems.next(res.numOfCartItems)
             updatecartnumber("+")
             this._ToastrService.success(res.message)            
           },

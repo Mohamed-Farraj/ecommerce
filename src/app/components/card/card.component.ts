@@ -5,6 +5,7 @@ import { CartService } from '../../core/services/cart.service';
 import { cartItems, enverionment, updatecartnumber } from '../../core/environments/environment';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { ToastrService } from 'ngx-toastr';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-card',
@@ -25,7 +26,23 @@ export class CardComponent {
  private readonly _CartService = inject(CartService)
  private readonly _WishlistService = inject(WishlistService)
  private readonly _ToastrService = inject(ToastrService)
+
+
+ ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  AOS.init({
+    once: false,
+    offset: 150,
+    duration: 1000,
+  });
+ }
+
+ ngAfterViewInit() {
+  AOS.refresh();
+}
  
+
  getGradient(value: number){
   const percentage = (value / 5) * 100; // Convert to percentage based on max 5 stars
     return `linear-gradient(90deg, #FFC107 ${percentage}%, #E0E0E0 ${percentage}%)`;
@@ -35,6 +52,8 @@ export class CardComponent {
   this._CartService.addToCart(id).subscribe({
     next:(res:any)=>{
       console.log(res);
+      this._CartService.numberCartItems.next(res.numOfCartItems) 
+      console.log(this._CartService.numberCartItems );
       updatecartnumber("+")
       console.log(cartItems);
       this._ToastrService.success(res.message)
