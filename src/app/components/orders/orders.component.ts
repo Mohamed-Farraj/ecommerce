@@ -3,6 +3,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaymentService } from '../../core/services/payment.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../../core/services/cart.service';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-orders',
@@ -17,13 +19,13 @@ export class OrdersComponent {
   private readonly _PaymentService = inject(PaymentService)
   private readonly _ActivatedRoute = inject(ActivatedRoute)
   private readonly _Router = inject(Router)
+  private readonly _CartService = inject(CartService)
   cartId:string ="";
 
 
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    Aos.init()
     this._ActivatedRoute.paramMap.subscribe({
       next:(params)=>{
         console.log(params.get('id'));
@@ -31,6 +33,10 @@ export class OrdersComponent {
         console.log(this.cartId);
       }
     })
+  }
+
+  ngAfterViewInit(): void {
+    Aos.refresh()
   }
 
 
@@ -47,6 +53,7 @@ export class OrdersComponent {
         if(res.status == "success")
         {
           this.shippingSuccess = true
+          this._CartService.numberCartItems.next(0)
         }
         
       },
@@ -62,7 +69,10 @@ export class OrdersComponent {
         console.log(res);
         if(res.status == "success")
         {
+          this._CartService.numberCartItems.next(0)
+
           window.open(res.session.url,'_self')
+
         }
         
       },

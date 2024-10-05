@@ -72,7 +72,7 @@ export class DetailsComponent implements OnInit,OnDestroy{
     this._CartService.addToCart(this.id!).subscribe({
       next:(res:any)=>{
         console.log(res);
-        updatecartnumber("+")
+        this._CartService.numberCartItems.next(res.numOfCartItems)
         console.log(cartItems);
         this._ToastrService.success(res.message)
       },

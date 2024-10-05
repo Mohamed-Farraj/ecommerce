@@ -1,4 +1,4 @@
-import { NgStyle } from '@angular/common';
+import { NgIf, NgStyle } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
@@ -10,7 +10,7 @@ import * as AOS from 'aos';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [NgStyle,RouterLink],
+  imports: [NgStyle,RouterLink,NgIf],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
@@ -26,7 +26,7 @@ export class CardComponent {
  private readonly _CartService = inject(CartService)
  private readonly _WishlistService = inject(WishlistService)
  private readonly _ToastrService = inject(ToastrService)
-
+ isLoading:boolean = false
 
  ngOnInit(): void {
   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -49,8 +49,10 @@ export class CardComponent {
  }
 
  addToCart(id:string){
+  this.isLoading = true;
   this._CartService.addToCart(id).subscribe({
     next:(res:any)=>{
+      this.isLoading = false;
       console.log(res);
       this._CartService.numberCartItems.next(res.numOfCartItems) 
       console.log(this._CartService.numberCartItems );

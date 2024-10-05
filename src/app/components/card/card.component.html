@@ -1,5 +1,5 @@
-<section>
-<div data-aos="fade-up" class="hover:shadow-emerald-600 duration-500 group w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<section data-aos="fade-up">
+<div  class="hover:shadow-emerald-600 duration-500 group w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="px-2 md:px-5 pb-5">
         <div [routerLink]="['/details', productId]" class="routerDiv">
         <img class=" object-contain aspect-[2/1.5] rounded-t-lg" [src]="imgSrc" alt="product image" />
@@ -18,7 +18,7 @@
         </div>
         </div>
         <div class="flex py-0 items-center overflow-hidden relative justify-between">
-            <button (click)="addToCart(productId)" class="  w-[80%] me-2 opacity-0 top-[111%] group-hover:top-0 group-hover:bottom-0 group-hover:opacity-100 absolute text-center btn-main hover:text-white">Add to cart</button>
+            <button (click)="addToCart(productId)" class="  w-[80%] me-2 opacity-0 top-[111%] group-hover:top-0 group-hover:bottom-0 group-hover:opacity-100 absolute text-center btn-main hover:text-white">{{!isLoading?'Add to cart':null}}<i *ngIf="isLoading" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
             <button (click)="addToWishlist(productId)" class="ms-auto me-1 text-emerald-400"><i class="fa-regular fa-heart text-3xl"></i></button>
         </div>
     </div>

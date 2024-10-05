@@ -6,11 +6,13 @@ import { CartService } from '../../core/services/cart.service';
 import { updatecartnumber } from '../../core/environments/environment';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { ToastrService } from 'ngx-toastr';
+import Aos from 'aos';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-hcard',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './hcard.component.html',
   styleUrl: './hcard.component.scss'
 })
@@ -20,15 +22,20 @@ export class HcardComponent {
       @Input() productData!:any;
       @Output() notifyParent: EventEmitter<void> = new EventEmitter();
       spin:boolean = true
+      isLoading:boolean = false
 
       private readonly _CartService = inject(CartService)
       private readonly _WishlistService = inject(WishlistService)
       private readonly _ToastrService = inject(ToastrService)
 
       ngOnInit(): void {
+        Aos.init({once:true})
         console.log(this.productData);
       }
 
+      ngAfterViewInit(): void {
+        Aos.refresh()
+      }
       plus(id:string)
       {
         this.spin = false
@@ -98,8 +105,10 @@ export class HcardComponent {
       }
 
       addToCart(id:string){
+        this.isLoading = true
         this._CartService.addToCart(id).subscribe({
           next:(res:any)=>{
+            this.isLoading = false
             console.log(res);
             this._CartService.numberCartItems.next(res.numOfCartItems)
             updatecartnumber("+")

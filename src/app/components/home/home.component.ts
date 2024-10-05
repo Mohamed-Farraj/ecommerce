@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CategoriesService } from '../../core/services/categories.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { RouterLink } from '@angular/router';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,10 +19,12 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit , OnDestroy{ 
   private readonly _ProductsService = inject(ProductsService)
   private readonly _CategoriesService = inject(CategoriesService)
+  private readonly spinner = inject(NgxSpinnerService)
   products:IProduct[]=[]
   categories:ICategories[]=[]
   unsub!: Subscription;
   unsubC!: Subscription;
+  
 
 
 

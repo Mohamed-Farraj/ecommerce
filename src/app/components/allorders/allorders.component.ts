@@ -3,6 +3,7 @@ import { PaymentService } from '../../core/services/payment.service';
 import { AuthServiceService } from '../../core/services/auth/auth-service.service';
 import { IOrder } from '../../core/interfaces/iorder';
 import { RouterLink } from '@angular/router';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-allorders',
@@ -20,6 +21,7 @@ export class AllordersComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    Aos.init()
     const uid = this._AuthServiceService.deJWT()
     console.log((uid as any)['id']);
     console.log((uid as any)['name']);
@@ -35,7 +37,11 @@ export class AllordersComponent {
     })
   }
 
-
+ngAfterViewInit(): void {
+  //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  //Add 'implements AfterViewInit' to the class.
+  Aos.refresh()
+}
 
 
 
