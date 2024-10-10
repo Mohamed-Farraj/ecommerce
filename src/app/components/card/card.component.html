@@ -5,21 +5,28 @@
         <img class=" object-contain aspect-[2/1.5] rounded-t-lg" [src]="imgSrc" alt="product image" />
         <h4 class="text-[var(--main-color)] my-2" >{{category}}</h4>
         <h5 class="line-clamp-1 text-md md:text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
-        <div class="flex flex-wrap items-center mt-2.5 mb-5">
-            <span class="text-lg mb-2 md:text-3xl me-auto font-bold text-gray-900 dark:text-white"><i class="fa-solid fa-sterling-sign"></i> {{price}}</span>
+        <div class="flex items-center mt-2.5 mb-5">
+            <span class="text-md text-nowrap  mb-0 md:mb-2 md:text-3xl me-auto font-bold text-gray-900 dark:text-white"><i class="fa-solid fa-sterling-sign"></i> {{price}}</span>
             <div [ngStyle]="{'background-image': getGradient(rating)}" class="flex items-center  bg-clip-text  rtl:space-x-reverse">
                 <i class="fa-solid fa-star text-transparent"></i>
                 <i class="fa-solid fa-star text-transparent"></i>
                 <i class="fa-solid fa-star text-transparent"></i>
                 <i class="fa-solid fa-star text-transparent"></i>
                 <i class="fa-solid fa-star text-transparent"></i>
-                <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 ms-3">{{rating}}</span>
             </div>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 ms-0  md:ms-3 ">{{rating}}</span>
         </div>
         </div>
         <div class="flex py-0 items-center overflow-hidden relative justify-between">
             <button (click)="addToCart(productId)" class="  w-[80%] me-2 opacity-0 top-[111%] group-hover:top-0 group-hover:bottom-0 group-hover:opacity-100 absolute text-center btn-main hover:text-white">{{!isLoading?'Add to cart':null}}<i *ngIf="isLoading" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
-            <button (click)="addToWishlist(productId)" class="ms-auto me-1 text-emerald-400"><i class="fa-regular fa-heart text-3xl"></i></button>
+            <button (click)="addToWishlist(productId)" class="ms-auto me-1 text-emerald-400">
+                @if (wloading) {
+                    <i class="fa fa-spinner fa-spin text-3xl" aria-hidden="true"></i>
+                }
+                @else {
+                    <i [ngClass]="{'fa-regular': !wish,'fa-solid':wish}" class=" fa-heart text-3xl"></i>
+                }
+            </button>
         </div>
     </div>
 </div>

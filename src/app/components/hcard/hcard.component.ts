@@ -23,6 +23,7 @@ export class HcardComponent {
       @Output() notifyParent: EventEmitter<void> = new EventEmitter();
       spin:boolean = true
       isLoading:boolean = false
+      wloading:boolean = false
 
       private readonly _CartService = inject(CartService)
       private readonly _WishlistService = inject(WishlistService)
@@ -76,6 +77,7 @@ export class HcardComponent {
 
 
       removeItem(id:string){
+        this.wloading = true
         this._CartService.removeFromCart(id).subscribe({
           next:(res:any)=>{
             console.log("removal result",res);
@@ -83,23 +85,28 @@ export class HcardComponent {
             this.notifyParent.emit()
             this._ToastrService.success(res.status)
             this._CartService.numberCartItems.next(res.numOfCartItems)
+            this.wloading = false
           },
           error:(err)=>{
             console.log(err);
             this._ToastrService.error(err.status)
+            this.wloading = false
           }
         })
       }
       removeItemw(id:string){
+        this.wloading = true
         this._WishlistService.removeWishlist(id).subscribe({
           next:(res:any)=>{
             console.log("removal result",res);
             this.notifyParent.emit();
             this._ToastrService.success(res.message)
+            this.wloading = false;
           },
           error:(err)=>{
             console.log(err);
             this._ToastrService.error(err.message)
+            this.wloading = false;
           }
         })
       }

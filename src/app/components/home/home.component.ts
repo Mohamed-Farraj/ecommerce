@@ -8,6 +8,8 @@ import { CategoriesService } from '../../core/services/categories.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { RouterLink } from '@angular/router';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import Aos from 'aos';
+import { WishlistService } from '../../core/services/wishlist.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,11 +21,32 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 export class HomeComponent implements OnInit , OnDestroy{ 
   private readonly _ProductsService = inject(ProductsService)
   private readonly _CategoriesService = inject(CategoriesService)
+  private readonly _WishlistService = inject(WishlistService)
   private readonly spinner = inject(NgxSpinnerService)
   products:IProduct[]=[]
   categories:ICategories[]=[]
+  wish:IProduct[] = []
   unsub!: Subscription;
   unsubC!: Subscription;
+  isWish:boolean = false
+
+
+  changtest(e:any){
+    console.log("test changed",e);
+    if(e[1])
+    {
+      this.wish.push(this.products.find(p => p._id === e[0])!) 
+    }
+    else{
+      this.wish = this.wish.filter(p => p._id!== e[0])
+    }
+
+  }
+
+
+  isInWishlist(productId: string): boolean {
+    return this.wish.some(product => product._id === productId);
+  }
   
 
 
@@ -56,10 +79,28 @@ export class HomeComponent implements OnInit , OnDestroy{
   }
 
 ngOnInit(): void {
+
+  Aos.init({
+    once:false,
+    offset: 200,
+    duration:800,
+})
+
   this.unsub = this._ProductsService.getAllProducts().subscribe({
     next:(res:any)=>{
       console.log(res.data);
       this.products = res.data
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
+
+
+  this._WishlistService.getWishlist().subscribe({
+    next:(res:any)=>{
+      console.log("wish is here",res.data);
+      this.wish = res.data
     },
     error:(err)=>{
       console.log(err);
@@ -76,6 +117,14 @@ ngOnInit(): void {
     }
   })
 
+}
+
+ngAfterViewInit(): void {
+
+  Aos.refresh(); 
+  setTimeout(() => {
+    Aos.refresh();
+  }, 2500);
 }
 
 ngOnDestroy(): void {

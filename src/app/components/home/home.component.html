@@ -73,6 +73,8 @@
       [category]="product.category.name"
       [rating]="product.ratingsAverage"
       [productId]="product._id"
+      [wish]="isInWishlist(product._id)"
+      (favoriteClicked)="changtest($event)"
     ></app-card>
     }
   </div>
