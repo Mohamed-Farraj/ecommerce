@@ -1,84 +1,136 @@
-<!-- -------------- main slider -------------------- -->
-<section class="grid h-[15vh] md:h-[40vh] grid-cols-12">
-  <div class="main-slider col-span-12 md:col-span-9">
-    <swiper-container
-      class="mySwiper"
-      pagination="true"
-      pagination-clickable="true"
-      navigation="true"
-      space-between="30"
-      centered-slides="true"
-      autoplay-delay="5000"
-      autoplay-disable-on-interaction="false"
-    >
-      <swiper-slide
-        ><img src="./assets/images/banner-4.jpeg" alt=""
-      /></swiper-slide>
-      <swiper-slide
-        ><img
-          src="./assets/images/2fa64cae-0e97-4506-85a4-f6decc933c97.avif"
-          alt=""
-      /></swiper-slide>
-      <swiper-slide
-        ><img
-          src="./assets/images/978ec254-e397-43d6-9de1-c06966f3e86c.avif"
-          alt=""
-      /></swiper-slide>
-      <swiper-slide
-        ><img
-          src="./assets/images/3d69235e-1202-40ff-84ba-9704ff10b211.avif"
-          alt=""
-      /></swiper-slide>
-      <div
-        style="z-index: 500"
-        class="autoplay-progress"
-        slot="container-end"
-      ></div>
-    </swiper-container>
-  </div>
-  <div class="side-imgs h-full hidden md:col-span-3 md:flex flex-wrap">
-    <img class="object-cover block" src="./assets/images/grocery-banner.png" alt="" />
-      <img class="object-cover block" src="./assets/images/grocery-banner-2.jpeg" alt="" />
+<!-- ============================================================
+     LUXE — Home Landing Page
+     ============================================================ -->
+
+<!-- ─── Hero Section ─── -->
+<section class="hero-section">
+  <!-- Main Slider -->
+  <div class="hero-grid grid grid-cols-12">
+    <div class="hero-slider col-span-12 md:col-span-9 relative">
+      <!-- Dark overlay -->
+      <div class="hero-overlay"></div>
+
+      <swiper-container
+        class="mySwiper"
+        pagination="true"
+        pagination-clickable="true"
+        navigation="true"
+        space-between="0"
+        centered-slides="true"
+        autoplay-delay="5000"
+        autoplay-disable-on-interaction="false"
+        effect="fade"
+      >
+        <swiper-slide><img src="./assets/images/banner-4.jpeg" alt="Luxury collection banner" /></swiper-slide>
+        <swiper-slide><img src="./assets/images/2fa64cae-0e97-4506-85a4-f6decc933c97.avif" alt="Premium products" /></swiper-slide>
+        <swiper-slide><img src="./assets/images/978ec254-e397-43d6-9de1-c06966f3e86c.avif" alt="Exclusive offers" /></swiper-slide>
+        <swiper-slide><img src="./assets/images/3d69235e-1202-40ff-84ba-9704ff10b211.avif" alt="New arrivals" /></swiper-slide>
+        <div style="z-index: 500" class="autoplay-progress" slot="container-end"></div>
+      </swiper-container>
+
+      <!-- Hero tagline overlay -->
+      <div class="hero-tagline">
+        <span class="hero-tagline__label">New Season</span>
+        <h1 class="hero-tagline__title">Discover <em>Luxury</em></h1>
+        <p class="hero-tagline__subtitle">Curated collections for the discerning taste</p>
+        <button class="btn-main hero-tagline__cta" routerLink="/products">
+          Explore Collection
+        </button>
+      </div>
+    </div>
+
+    <!-- Side Images -->
+    <div class="hero-side hidden md:col-span-3 md:flex flex-col">
+      <div class="hero-side__img">
+        <img src="./assets/images/grocery-banner.png" alt="Featured category" />
+        <div class="hero-side__overlay">
+          <span>Trending</span>
+        </div>
+      </div>
+      <div class="hero-side__img">
+        <img src="./assets/images/grocery-banner-2.jpeg" alt="Special deals" />
+        <div class="hero-side__overlay">
+          <span>Best Deals</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
-<!-- -------------- Categories slider -------------------- -->
-<section class="">
-  <owl-carousel-o class="" [options]="customOptions">
-    @for (category of categories; track category._id) {
 
+<!-- ─── Decorative Divider ─── -->
+<div class="section-divider">
+  <span class="section-divider__diamond">◆</span>
+</div>
+
+<!-- ─── Categories / Collections ─── -->
+<section class="categories-section">
+  <div class="section-header">
+    <span class="section-header__label">Browse</span>
+    <h2 class="section-header__title">Our Collections</h2>
+    <div class="section-header__line"></div>
+  </div>
+
+  <owl-carousel-o [options]="customOptions">
+    @for (category of categories; track category._id) {
     <ng-template carouselSlide>
-      <div class="item">
-        <img
-          class=" h-[20vh] md:h-[30vh] object-cover"
-          [src]="category.image"
-          [alt]="category.name"
-        />
-        <div class="carousel-caption d-none d-md-block">
-          <h4 class="text-center text-emerald-500">{{ category.name }}</h4>
+      <div class="category-card">
+        <div class="category-card__img-wrap">
+          <img
+            [src]="category.image"
+            [alt]="category.name"
+          />
+          <div class="category-card__overlay"></div>
         </div>
-      </div></ng-template
-    >
+        <h4 class="category-card__name">{{ category.name }}</h4>
+      </div>
+    </ng-template>
     }
   </owl-carousel-o>
 </section>
-<!-- -------------- Popular Products -------------------- -->
-<div class="container px-1">
-  <h1 class=" my-5 font-normal text-center text-emerald-700 text-5xl">Our Popular Products</h1>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-    @for(product of products.slice(0,8); track product.id){
-    <app-card
-      [imgSrc]="product.imageCover"
-      [title]="product.title"
-      [price]="product.price"
-      [category]="product.category.name"
-      [rating]="product.ratingsAverage"
-      [productId]="product._id"
-      [wish]="isInWishlist(product._id)"
-      (favoriteClicked)="changtest($event)"
-    ></app-card>
-    }
-  </div>
-  <button class="btn-main mx-auto my-5 block" routerLink="/products">
-    Click Here to See More
-  </button>
+
+<!-- ─── Decorative Divider ─── -->
+<div class="section-divider">
+  <span class="section-divider__diamond">◆</span>
 </div>
+
+<!-- ─── Popular / Curated Products ─── -->
+<section class="products-section">
+  <div class="section-header">
+    <span class="section-header__label">Handpicked</span>
+    <h2 class="section-header__title">Curated For You</h2>
+    <div class="section-header__line"></div>
+  </div>
+
+  <div class="products-grid container px-1">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+      @for(product of products.slice(0,8); track product.id){
+      <app-card
+        [imgSrc]="product.imageCover"
+        [title]="product.title"
+        [price]="product.price"
+        [category]="product.category.name"
+        [rating]="product.ratingsAverage"
+        [productId]="product._id"
+        [wish]="isInWishlist(product._id)"
+        (favoriteClicked)="changtest($event)"
+      ></app-card>
+      }
+    </div>
+
+    <div class="products-section__cta">
+      <button class="btn-main" routerLink="/products">
+        View All Products
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Loyalty Banner ─── -->
+<section class="loyalty-banner">
+  <div class="loyalty-banner__content">
+    <div class="loyalty-banner__icon">✦</div>
+    <h3 class="loyalty-banner__title">Join the LUXE Circle</h3>
+    <p class="loyalty-banner__text">Get early access to exclusive drops, members-only pricing, and free express shipping.</p>
+    <button class="btn-main" routerLink="/register">Become a Member</button>
+  </div>
+</section>

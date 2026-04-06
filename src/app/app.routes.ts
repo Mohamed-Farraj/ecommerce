@@ -19,25 +19,25 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { AllordersComponent } from './components/allorders/allorders.component';
 
 export const routes: Routes = [
-    {path:"",component:AuthLayoutComponent,canActivate:[logedGuard],children:[
-        {path:"",redirectTo:"login",pathMatch:"full"},
-        {path:"login",component:LoginComponent},
-        {path:"register",component:RegisterComponent},
-        {path:'forgot',component:ForgotComponent},
-    ]},
-    {path:"",component:BlankLayoutComponent,canActivate:[authGuard],children:[
+    // {path:"",component:AuthLayoutComponent,canActivate:[logedGuard],children:[
+    //     {path:"",redirectTo:"login",pathMatch:"full"},
+    //     {path:"login",component:LoginComponent},
+    //     {path:"register",component:RegisterComponent},
+    //     {path:'forgot',component:ForgotComponent},
+    // ]},
+    // {path:"",component:BlankLayoutComponent,canActivate:[authGuard],children:[
+    {path:"",component:BlankLayoutComponent,children:[
         {path:"",redirectTo:"home",pathMatch:"full"},
         {path:"home",component:HomeComponent},
-        {path:"brands",component:BrandsComponent},
-        {path:"categories",component:CategoriesComponent},
-        {path:"about",component:AboutComponent},
-        {path:"cart",component:CartComponent},
         {path:"products",component:ProductComponent},
-        {path:"wishlist",component:WishlistComponent},
         {path:'details/:id',component:DetailsComponent},
-        {path:'orders/:id',component:OrdersComponent},
+        {path:"wishlist",component:WishlistComponent},
+        {path:"categories",component:CategoriesComponent},
+        {path:"brands",component:BrandsComponent},
+        {path:"about",component:AboutComponent},
         {path:'allorders',component:AllordersComponent},
-        
+        {path:'orders/:id',component:OrdersComponent},
+        {path:"cart",component:CartComponent},
     ]},
     {path:"**",component:NotfoundComponent}
 ];

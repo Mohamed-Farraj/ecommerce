@@ -1,91 +1,268 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   LUXE — Global Styles & Design Token System
+   All colors are CSS custom properties for easy theming.
+   Change the :root variables to re-skin the entire app.
+   ============================================================ */
+
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
 
+/* ─── Design Tokens ─── */
 :root {
-  --main-color: #0aad0a;
-  --hover-color: #11bd11;
-  --light-color: #f0f3f2;
-  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
-    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
-    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
-  --font-family: "Encode Sans Expanded", sans-serif;
-  --rating-color: #ffc908;
+  /* ── Primary Palette ── */
+  --color-bg-primary:    #0d0d0d;       /* Main background — deep black       */
+  --color-bg-secondary:  #1a1a2e;       /* Sections / cards — dark navy       */
+  --color-bg-tertiary:   #16213e;       /* Elevated surfaces                  */
+  --color-bg-surface:    #0f3460;       /* Highlighted surface                */
+
+  /* ── Accent — Gold ── */
+  --color-accent:        #c9a84c;       /* Primary gold                       */
+  --color-accent-light:  #e2cc8a;       /* Lighter gold (hover states)        */
+  --color-accent-dark:   #a08636;       /* Darker gold (pressed states)       */
+  --color-accent-glow:   rgba(201, 168, 76, 0.35);
+
+  /* ── Text ── */
+  --color-text-primary:  #f5f0e8;       /* Main body text — warm white        */
+  --color-text-secondary:#b0a99f;       /* Muted / caption text               */
+  --color-text-heading:  #ffffff;       /* Headings                           */
+  --color-text-inverse:  #0d0d0d;       /* Text on gold buttons               */
+
+  /* ── Borders & Dividers ── */
+  --color-border:        rgba(201, 168, 76, 0.18);
+  --color-border-hover:  rgba(201, 168, 76, 0.45);
+  --color-divider:       rgba(255, 255, 255, 0.06);
+
+  /* ── Rating ── */
+  --color-rating:        #f5c518;
+
+  /* ── Danger / Success (functional) ── */
+  --color-success:       #4caf50;
+  --color-danger:        #ef5350;
+
+  /* ── Shadows ── */
+  --shadow-card:         0 4px 24px rgba(0, 0, 0, 0.45);
+  --shadow-card-hover:   0 8px 40px rgba(201, 168, 76, 0.18),
+                         0 2px 16px rgba(0, 0, 0, 0.5);
+  --shadow-gold-glow:    0 0 20px rgba(201, 168, 76, 0.25);
+
+  /* ── Gradients ── */
+  --gradient-gold:       linear-gradient(135deg, #c9a84c, #e2cc8a, #c9a84c);
+  --gradient-dark:       linear-gradient(180deg, #0d0d0d 0%, #1a1a2e 100%);
+  --gradient-overlay:    linear-gradient(180deg,
+                           rgba(13, 13, 13, 0.6) 0%,
+                           rgba(13, 13, 13, 0.2) 40%,
+                           rgba(13, 13, 13, 0.7) 100%);
+
+  /* ── Typography ── */
+  --font-heading:        'Playfair Display', Georgia, serif;
+  --font-body:           'Inter', system-ui, sans-serif;
+
+  /* ── Misc ── */
+  --radius-sm:           6px;
+  --radius-md:           12px;
+  --radius-lg:           20px;
+  --transition-base:     all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Legacy Compatibility ── */
+  --main-color:          var(--color-accent);
+  --hover-color:         var(--color-accent-light);
+  --light-color:         var(--color-bg-secondary);
+  --rating-color:        var(--color-rating);
+  --font-family:         var(--font-body);
+}
+
+/* ─── Global Reset & Base ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: var(--font-family) !important;
+  font-family: var(--font-body) !important;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.nav-link {
-  // transition: unset !important;
-}
-.active-link {
-  background-color: var(--main-color) !important;
-  color: var(--light-color) !important;
-  border-radius: 5px;
+/* ─── Typography ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-heading);
 }
 
-.rating-color {
-  color: var(--rating-color);
-}
-.cursor-pointer {
-  cursor: pointer;
-}
+/* ─── Links ─── */
 a,
 a:hover {
-  color: black;
+  color: var(--color-text-primary);
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--color-accent);
 }
 
+/* ─── Navigation ─── */
+.active-link {
+  background-color: var(--color-accent) !important;
+  color: var(--color-text-inverse) !important;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Product Card (global) ─── */
 .product {
-  border-radius: 5px;
-  border: solid 1px var(--main-color);
-  transition: box-shadow 0.5s;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  transition: var(--transition-base);
   overflow: hidden;
 }
-
 .product:hover {
-  box-shadow: 0 0 10px #11bd1168;
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
 }
 
+/* ─── Utilities ─── */
 .font-sm {
   font-size: 12px;
 }
 .text-main {
-  color: var(--main-color);
+  color: var(--color-accent) !important;
 }
 .bg-main {
-  background-color: var(--main-color) !important;
+  background-color: var(--color-accent) !important;
 }
 .bg-main-light {
-  background-color: var(--light-color) !important;
+  background-color: var(--color-bg-secondary) !important;
 }
-.btn-main {
-  background-color: var(--main-color);
-  padding: 7px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #fff;
+.rating-color {
+  color: var(--color-rating);
+}
+.cursor-pointer {
   cursor: pointer;
-  transition: all 0.5s;
+}
+
+/* ─── Gold Button ─── */
+.btn-main {
+  background: var(--gradient-gold);
+  background-size: 200% 100%;
+  padding: 10px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+.btn-main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+.btn-main:hover {
+  background-position: 100% 0;
+  box-shadow: var(--shadow-gold-glow);
+  transform: translateY(-1px);
+}
+.btn-main:hover::after {
+  left: 100%;
 }
 .btn-main:disabled {
   cursor: not-allowed;
-  background-color: #ccc;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  box-shadow: none;
 }
 .btn-main:disabled:hover {
-  background-color: #ccc;
+  background: var(--color-bg-tertiary);
+  transform: none;
 }
-.btn-main:hover {
-  background-color: #11bd11;
-}
-.nav-spacer
-{
+
+/* ─── Nav Spacer ─── */
+.nav-spacer {
   height: 72px;
+}
+
+/* ─── Scrollbar (Luxury Dark) ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-dark);
+}
+
+/* ─── Keyframe Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 8px var(--color-accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--color-accent-glow);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─── Selection Color ─── */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
 }
