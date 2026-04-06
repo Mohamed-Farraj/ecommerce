@@ -1,61 +1,123 @@
 @if (detail) {
-<section class="overflow-x-hidden grid mt-5 py-5 px-4 grid-cols-1 md:grid-cols-2">
-    
-    <div data-aos="fade-right" class="vslider ">
-        <div class="w-[80%] md:w-1/2 mx-auto">
-             <swiper-container style="--swiper-navigation-color: var(--main-color); --swiper-pagination-color: #fff" class="mySwiper"
-    thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
-    <swiper-slide>
-        <img [src]="hero" />
-      </swiper-slide>
-    @for (image of detail.images; track $index) {
-    <swiper-slide>
-      <img [src]="image" />
-    </swiper-slide>
-    }
-  </swiper-container>
+<!-- Background setup: Utilizing tailwind with CSS vars for the dark theme -->
+<section class="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] pb-20 pt-[90px] overflow-hidden relative">
 
-  <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
-    watch-slides-progress="true">
-    <swiper-slide>
-        <img class="cursor-pointer" [src]="hero" />
-      </swiper-slide>
-    @for (image of detail.images; track $index) {
-    <swiper-slide>
-      <img class="cursor-pointer"  [src]="image" />
-    </swiper-slide>
-    }
-  </swiper-container>
-        </div>
+    <!-- Decorative Glows for the layout -->
+    <div class="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-[var(--color-accent)] opacity-[0.05] rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[var(--color-bg-surface)] opacity-[0.2] rounded-full blur-[120px] pointer-events-none"></div>
 
- 
-
-    </div>
-
-    <div data-aos="fade-left" class="productDetails px-4 flex flex-col justify-center items-center">
-        <p class="mb-4 self-start text-6xl tracking-tight text-gray-900 dark:text-white">{{detail.title}}</p>
-        <p class="mb-2 self-start text-2xl tracking-tight text-gray-700 dark:text-white">{{detail.description}}</p>
-        <span class="text-xl text-emerald-800 self-start">{{detail.category.name}}</span>
-<div class="w-full">
-        <div class="flex items-center mt-2.5 mb-5">
-            <span class="text-3xl me-auto font-bold text-gray-900 dark:text-white"><i class="fa-solid fa-sterling-sign"></i> {{detail.price}}</span>
-            <div [ngStyle]="{'background-image': getGradient(detail.ratingsAverage)}" class="flex items-center  bg-clip-text  rtl:space-x-reverse">
-                <i class="fa-solid fa-star text-transparent"></i>
-                <i class="fa-solid fa-star text-transparent"></i>
-                <i class="fa-solid fa-star text-transparent"></i>
-                <i class="fa-solid fa-star text-transparent"></i>
-                <i class="fa-solid fa-star text-transparent"></i>
-            </div>
-            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 ms-3">{{detail.ratingsAverage}}</span>
-        </div>
+    <div class="container mx-auto px-4 md:px-8 max-w-7xl">
         
-    </div>
-    <button (click)="add()"  class=" mt-2 mx-auto w-full text-2xl text-center btn-main hover:text-white">Add to cart</button>
+       <!-- Breadcrumb / Back Navigation (Stubbed structural element for luxury feel) -->
+       <div class="mb-8 flex items-center gap-2 text-sm text-[var(--color-text-secondary)] uppercase tracking-widest font-semibold" data-aos="fade-down">
+           <a routerLink="/products" class="hover:text-[var(--color-accent)] duration-300 transition-colors cursor-pointer">Collections</a>
+           <span class="text-[var(--color-accent)]">/</span>
+           <span class="text-[var(--color-text-primary)] truncate max-w-[200px] md:max-w-none">{{ detail.title }}</span>
+       </div>
+
+        <!-- Split Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            <!-- Left Side: Image Gallery Gallery (Takes 7 cols) -->
+            <div data-aos="fade-right" class="lg:col-span-7 flex flex-col gap-4 relative z-10">
+                <div class="luxury-gallery-main rounded-[30px] overflow-hidden border border-white/5 bg-[var(--color-bg-secondary)] relative aspect-[4/3] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                    <swiper-container class="mySwiper w-full h-full" thumbs-swiper=".mySwiper2" space-between="0" effect="fade">
+                        <swiper-slide class="w-full h-full flex items-center justify-center p-8">
+                            <img [src]="hero" class="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-700 hover:scale-[1.05]" />
+                        </swiper-slide>
+                        @for (image of detail.images; track $index) {
+                            <swiper-slide class="w-full h-full flex items-center justify-center p-8">
+                                <img [src]="image" class="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-700 hover:scale-[1.05]" />
+                            </swiper-slide>
+                        }
+                    </swiper-container>
+                </div>
+
+                <!-- Thumbs -->
+                <div class="luxury-gallery-thumbs h-[100px] mt-4">
+                    <swiper-container class="mySwiper2 w-full h-full" space-between="16" slides-per-view="4" free-mode="true" watch-slides-progress="true">
+                        <swiper-slide class="rounded-xl overflow-hidden cursor-pointer border border-white/10 transition-all duration-300 bg-[var(--color-bg-secondary)] opacity-50">
+                            <img [src]="hero" class="w-full h-full object-contain p-2" />
+                        </swiper-slide>
+                        @for (image of detail.images; track $index) {
+                            <swiper-slide class="rounded-xl overflow-hidden cursor-pointer border border-white/10 transition-all duration-300 bg-[var(--color-bg-secondary)] opacity-50">
+                                <img [src]="image" class="w-full h-full object-contain p-2" />
+                            </swiper-slide>
+                        }
+                    </swiper-container>
+                </div>
+            </div>
+
+            <!-- Right Side: Details Panel (Takes 5 cols) -->
+            <div data-aos="fade-left" class="lg:col-span-5 flex flex-col relative z-10">
+                <!-- Glassmorphic Info Card using modern Tailwind -->
+                <div class="p-8 md:p-10 rounded-[30px] bg-[rgba(26,26,46,0.3)] backdrop-blur-xl border border-white/5 shadow-2xl flex flex-col h-full">
+                    
+                    <!-- Category Badge -->
+                    <div class="mb-6">
+                        <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[3px] bg-[rgba(201,168,76,0.1)] text-[var(--color-accent)] border border-[rgba(201,168,76,0.2)]">
+                            {{ detail.category.name }}
+                        </span>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="font-['Playfair_Display'] text-4xl md:text-5xl font-medium text-white leading-tight mb-6 tracking-tight">
+                        {{ detail.title }}
+                    </h1>
+
+                    <!-- Rating Block -->
+                    <div class="flex items-center gap-4 mb-8 pb-8 border-b border-white/10">
+                        <div [ngStyle]="{'background-image': getGradient(detail.ratingsAverage)}" class="flex gap-1 text-sm bg-clip-text text-transparent">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-white/80 font-semibold text-sm">{{ detail.ratingsAverage }}</span>
+                        <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                        <span class="text-white/50 text-sm hover:text-[var(--color-accent)] transition-colors cursor-pointer underline decoration-white/20 underline-offset-4">Read Reviews</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="mb-8">
+                        <span class="font-['Playfair_Display'] text-5xl font-semibold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-sterling-sign text-3xl text-[var(--color-accent)] mt-1"></i>
+                            {{ detail.price }}
+                        </span>
+                        <p class="text-[var(--color-text-secondary)] text-sm mt-2">Taxes included. Free shipping on all luxury items.</p>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-10">
+                        <h4 class="text-sm font-semibold uppercase tracking-widest text-white mb-3">Product Description</h4>
+                        <p class="text-[var(--color-text-secondary)] font-['Inter'] leading-relaxed text-[1.05rem]">
+                            {{ detail.description }}
+                        </p>
+                    </div>
+
+                    <!-- Push Actions to bottom if container naturally stretches -->
+                    <div class="mt-auto pt-6 flex flex-col gap-4">
+                        <!-- Add to Cart (Pill button loaded with Tailwind & CSS vars) -->
+                        <button (click)="add()" class="w-full relative group overflow-hidden bg-transparent border border-[var(--color-accent)] text-[var(--color-accent)] rounded-full py-4 px-8 font-semibold text-sm uppercase tracking-widest transition-all duration-400 hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:border-transparent">
+                            <!-- Shimmer BG on Hover -->
+                            <div class="absolute inset-0 bg-[linear-gradient(135deg,#c9a84c,#e2cc8a,#c9a84c)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+                            
+                            <span class="relative z-10 flex items-center justify-center gap-3 group-hover:text-[var(--color-bg-primary)] transition-colors duration-300">
+                                <span>Add to Cart</span>
+                                <i class="fa-solid fa-bag-shopping text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
     </div>
 </section>
 }
 
-
 <section>
-    
+    <!-- Placeholder for related items if needed -->
 </section>

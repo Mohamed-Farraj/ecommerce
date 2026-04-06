@@ -1,87 +1,73 @@
-:host{
-  position: relative;
-  height: 100%;
-  background-color: #EEEEEE;
-}
+/* ============================================================
+   LUXE — Modern Details Component Styles
+   ============================================================ */
 
 :host {
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
-
-swiper-container {
-  width: 100%;
-  height: 100%;
-}
-
-swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #ffffff00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 1rem;
-}
-
-swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 30px;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
 }
 
-
-body {
-  background: #000;
-  color: #000;
-}
-
+/* ─── Swiper Global Overrides for Details ─── */
 swiper-container {
-  width: 100%;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
+  --swiper-theme-color: var(--color-accent);
+  --swiper-navigation-color: var(--color-accent);
+  --swiper-pagination-color: var(--color-accent);
+  --swiper-navigation-size: 24px;
 }
 
-swiper-slide {
-  background-size: cover;
-  background-position: center;
-}
-
+/* ─── Main Gallery Swiper ─── */
 .mySwiper {
-  height: 80%;
-  width: 100%;
-}
-
-.mySwiper2 {
-  height: 20%;
-  box-sizing: border-box;
-  padding: 10px 0;
-}
-
-.mySwiper2 swiper-slide {
-  width: 25%;
-  height: 100%;
-  opacity: 0.4;
-}
-
-.mySwiper2 .swiper-slide-thumb-active {
-  opacity: 1;
-}
-
-swiper-slide img {
-  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-  footer{
-    margin-top: 0 !important;
+  
+  /* Style the navigation buttons to look like luxury glass circles */
+  &::part(button-prev),
+  &::part(button-next) {
+    background: rgba(26, 26, 46, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-bg-primary);
+    }
   }
+}
+
+/* ─── Thumbnails Swiper ─── */
+.mySwiper2 {
+  padding: 4px 0;
+  
+  swiper-slide {
+    transition: all 0.3s ease;
+    border-color: transparent !important;
+    
+    &:hover {
+      opacity: 0.8 !important;
+    }
+  }
+
+  .swiper-slide-thumb-active {
+    opacity: 1 !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+  }
+}
+
+/* ─── Custom Font Overrides just in case Tailwind misses them ─── */
+.font-\[\'Playfair_Display\'\] {
+  font-family: var(--font-heading);
+}
+.font-\[\'Inter\'\] {
+  font-family: var(--font-body);
+}
+
+/* ─── Remove Default Body Resets from old code ─── */
+/* The previous SCSS had random body{} and :host{} light theme resets. 
+   They have been entirely purged to ensure clean inheritance from styles.scss */

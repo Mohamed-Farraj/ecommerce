@@ -1,52 +1,57 @@
-<section data-aos="fade-up">
-<div class="luxury-card group">
-    <div class="luxury-card__body">
-        <div [routerLink]="['/details', productId]" class="luxury-card__link">
-          <!-- Image -->
-          <div class="luxury-card__img-wrap">
-            <img [src]="imgSrc" alt="product image" />
-          </div>
-
-          <!-- Info -->
-          <h4 class="luxury-card__category">{{ category }}</h4>
-          <h5 class="luxury-card__title">{{ title }}</h5>
-
-          <div class="luxury-card__meta">
-            <span class="luxury-card__price">
-              <i class="fa-solid fa-sterling-sign"></i> {{ price }}
-            </span>
-            <div class="luxury-card__rating-wrap">
-              <div [ngStyle]="{'background-image': getGradient(rating)}" class="luxury-card__stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <span class="luxury-card__rating-badge">{{ rating }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="luxury-card__actions">
-          <button (click)="addToCart(productId)" class="luxury-card__add-btn">
-            @if (!isLoading) {
-              <span>Add to Cart</span>
-            }
-            @if (isLoading) {
-              <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-            }
-          </button>
-          <button (click)="addToWishlist(productId)" class="luxury-card__wish-btn">
+<section data-aos="fade-up" class="h-full">
+<div class="editorial-card group">
+    
+    <!-- Top Action Bar -->
+    <div class="editorial-card__top">
+        <span class="editorial-card__category">{{ category }}</span>
+        <button (click)="addToWishlist(productId)" class="editorial-card__wish" [attr.aria-label]="'Add to wishlist'">
             @if (wloading) {
-              <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
             }
             @else {
-              <i [ngClass]="{'fa-regular': !wish, 'fa-solid': wish}" class="fa-heart"></i>
+                <i [ngClass]="{'fa-regular': !wish, 'fa-solid': wish}" class="fa-heart"></i>
             }
-          </button>
+        </button>
+    </div>
+
+    <!-- Product Image Showcase -->
+    <div [routerLink]="['/details', productId]" class="editorial-card__showcase">
+        <div class="editorial-card__img-glow"></div>
+        <img [src]="imgSrc" [alt]="title" loading="lazy" />
+    </div>
+
+    <!-- Product Details -->
+    <div [routerLink]="['/details', productId]" class="editorial-card__details">
+        <h5 class="editorial-card__title" [title]="title">{{ title }}</h5>
+        
+        <div class="editorial-card__rating">
+            <div [ngStyle]="{'background-image': getGradient(rating)}" class="editorial-card__stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="editorial-card__rating-val">{{ rating }}</span>
         </div>
     </div>
+
+    <!-- Footer Actions (Price & Cart) -->
+    <div class="editorial-card__footer">
+        <span class="editorial-card__price">
+            <i class="fa-solid fa-sterling-sign"></i>{{ price }}
+        </span>
+        
+        <button (click)="addToCart(productId)" class="editorial-card__add" [disabled]="isLoading">
+            @if (!isLoading) {
+                <span>Add to Bag</span>
+                <i class="fa-solid fa-plus editorial-card__add-icon"></i>
+            }
+            @if (isLoading) {
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+            }
+        </button>
+    </div>
+
 </div>
 </section>
